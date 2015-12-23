@@ -1,5 +1,5 @@
 package grid.services;
 
-public class MetricService {
+public interface MetricService {
 
 }

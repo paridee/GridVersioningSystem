@@ -1,5 +1,5 @@
 package grid.services;
 
-public class MeasurementGoalService {
+public interface MeasurementGoalService {
 
 }

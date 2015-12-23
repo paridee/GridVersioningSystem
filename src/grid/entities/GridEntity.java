@@ -1,13 +1,69 @@
 package grid.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 /**
  * This abstract class contains all the common elements among all elements belonging to every element of the Grid
  * @author Paride Casulli
  * @author Lorenzo La Banca
  */
+@Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class GridEntity {
-
+	
+	@Column(name = "label", nullable = false, length = 20)
 	public String 	label;
+	
 	public int 		idElement;	//primary key
+	
+	@Column(name = "version", nullable = false, length = 20)
 	public String 	version;
+	
+	/**
+	 * returns a label for this Grid Entity (in Grid is named as ID, depending on the type of Element
+	 * @return label of this element
+	 */
+	public String getLabel() {
+		return label;
+	}
+	
+	/**
+	 * sets a label for this element
+	 * @param label to be set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
+	/**
+	 * returns the element ID (primary key on DB)
+	 * @return
+	 */
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	public int getIdElement() {
+		return idElement;
+	}
+	
+	/**
+	 * sets an Id for this element
+	 * @param idElement
+	 */
+	public void setIdElement(int idElement) {
+		this.idElement = idElement;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
 }

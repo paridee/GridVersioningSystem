@@ -2,6 +2,9 @@ package grid.entities;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import grid.interfaces.Updatable;
 
 /**
@@ -12,12 +15,18 @@ import grid.interfaces.Updatable;
  * This class models a Goal entity on a Grid
  */
 
+@Entity
+@Table(name="Goal")
 public class Goal extends GridEntity implements Updatable{
-
+	@Column(name="assumption")
 	private String 				assumption		=	"";
+	@Column(name="context")
 	private	String 				context			=	"";
+	@Column(name="description")
 	private String 				description		=	"";
+	//TODO one to one relation
 	private MeasurementGoal		measurementGoal	=	null;
+	//TODO many to many relation
 	private ArrayList<Strategy> strategyList	=	null;
 	
 	/**
