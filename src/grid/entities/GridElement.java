@@ -18,12 +18,12 @@ import javax.persistence.InheritanceType;
 public abstract class GridElement {
 	
 	@Column(name = "label", nullable = false, length = 20)
-	public String 	label;
+	protected String 	label;
 	
-	public int 		idElement;	//primary key
+	protected int 		idElement;	//primary key
 	
 	@Column(name = "version", nullable = false, length = 20)
-	public String 	version;
+	protected int 	version=1;
 	
 	/**
 	 * returns a label for this Grid Entity (in Grid is named as ID, depending on the type of Element
@@ -59,11 +59,13 @@ public abstract class GridElement {
 	public void setIdElement(int idElement) {
 		this.idElement = idElement;
 	}
-	public String getVersion() {
+	public int getVersion() {
 		return version;
 	}
-	public void setVersion(String version) {
+	public void setVersion(int version) {
 		this.version = version;
 	}
+	
+	public abstract GridElement clone();
 	
 }

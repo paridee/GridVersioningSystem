@@ -132,4 +132,22 @@ public class Goal extends GridElement implements Updatable{
 		return null;
 	}
 
+	@Override
+	public GridElement clone() {
+		// TODO Auto-generated method stub
+		Goal newGoal	=	new Goal();
+		newGoal.setLabel(this.label);
+		newGoal.setVersion(this.version);
+		newGoal.setAssumption(this.assumption);
+		newGoal.setContext(this.context);
+		newGoal.setDescription(this.description);
+		newGoal.setMeasurementGoal(this.measurementGoal);
+		List<Strategy> clonedList	=	new ArrayList<Strategy>();
+		for(int i=0;i<this.strategyList.size();i++){
+			clonedList.add(strategyList.get(i));
+		}
+		newGoal.setStrategyList(clonedList);
+		return newGoal;
+	}
+
 }

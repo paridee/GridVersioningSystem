@@ -72,4 +72,19 @@ public class MeasurementGoal extends GridElement implements Updatable{
 		return null;
 	}
 
+	@Override
+	public GridElement clone() {
+		MeasurementGoal mg	=	new MeasurementGoal();
+		mg.setLabel(this.label);
+		mg.setVersion(this.version);
+		mg.setDescription(this.description);
+		mg.setInterpretationModel(this.interpretationModel);
+		List<Question> clonedList	=	new ArrayList<Question>();
+		for(int i=0;i<this.questionList.size();i++){
+			clonedList.add(questionList.get(i));
+		}
+		mg.setQuestionList(clonedList);
+		return mg;		
+	}
+
 }

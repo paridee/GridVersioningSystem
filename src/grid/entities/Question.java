@@ -50,4 +50,19 @@ public class Question extends GridElement implements Updatable{
 		return null;
 	}
 
+
+	@Override
+	public GridElement clone() {
+		Question cloned	=	new Question();
+		cloned.setLabel(this.label);
+		cloned.setVersion(this.version);
+		List<Metric> clonedList	=	new ArrayList<Metric>();
+		for(int i=0;i<this.metricList.size();i++){
+			clonedList.add(metricList.get(i));
+		}
+		cloned.setMetricList(clonedList);
+		cloned.setQuestion(this.question);
+		return cloned;
+	}
+
 }

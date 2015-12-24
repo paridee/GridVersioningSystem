@@ -5,12 +5,13 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import grid.DAOImpl.GoalDAOImpl;
+import grid.DAOImpl.GridElementDAOImpl;
 import grid.entities.Goal;
 import grid.entities.MeasurementGoal;
 import grid.entities.Metric;
 import grid.entities.Question;
 import grid.entities.Strategy;
+import grid.services.GridElementServiceImpl;
 
 public class TestMainClass {
 
@@ -28,44 +29,38 @@ public class TestMainClass {
 		Goal testg		=	new Goal();
 		testg.setDescription("pippogoal");
 		testg.setLabel("goal1");
-		testg.setVersion("1.0.0");
-		GoalDAOImpl	gdao	=	new GoalDAOImpl();
+		GridElementDAOImpl	gdao	=	new GridElementDAOImpl();
+		GridElementServiceImpl	serv	=	new GridElementServiceImpl();
 		gdao.setSessionFactory(sessionF);
-		gdao.addGoal(testg);
-		session.getTransaction().commit();
-/*
-		session.beginTransaction();
+		serv.setGoalDAO(gdao);
+		serv.addGridElement(testg);
 		Metric testm	=	new Metric();
 		testm.setDescription("pippo");
 		testm.setLabel("metric1");
-		testm.setVersion("1.0.0");
-		Goal testg		=	new Goal();
+		testg		=	new Goal();
 		testg.setDescription("pippogoal");
 		testg.setLabel("goal1");
-		testg.setVersion("1.0.0");
 		MeasurementGoal testmg	=	new MeasurementGoal();
 		testmg.setDescription("pippoMgoal");
 		testmg.setLabel("mg1");
-		testmg.setVersion("1.0.0");
 		testg.setMeasurementGoal(testmg);
 		Question testq	=	new Question();
 		testq.setLabel("qu1");
-		testq.setVersion("1.0.0");
 		Strategy tests	=	new Strategy();
 		tests.setLabel("str1");
-		tests.setVersion("1.0.0");
 		List str	=	testg.getStrategyList();
 		str.add(tests);
-		/*Goal test	=	new Goal();
+		Goal test	=	new Goal();
 		test.setDescription("pippo");
 		test.setContext("pasquale");
 		test.setAssumption("peppino");
-		session.save(tests);
-		session.save(testg);
-		session.save(testq);
-		session.save(testm);
-		session.save(testmg);
-		session.getTransaction().commit();*/
+		serv.addGridElement(testm);
+		serv.addGridElement(testg);
+		serv.addGridElement(testmg);
+		serv.addGridElement(testq);
+		serv.addGridElement(tests);
+		serv.upgradeGridElement(testg);
+		session.getTransaction().commit();
 		System.out.println("Amen");
 
 	}

@@ -96,4 +96,23 @@ public class Metric extends GridElement implements Updatable{
 		return null;
 	}
 
+
+	@Override
+	public GridElement clone() {
+		Metric newMetric	=	new Metric();
+		newMetric.setLabel(this.getLabel());
+		newMetric.setVersion(this.getVersion());
+		newMetric.setCount(this.count);
+		newMetric.setDescription(this.description);
+		List<String> clonedList	=	new ArrayList<String>();
+		for(int i=0;i<this.measUnits.size();i++){
+			clonedList.add(measUnits.get(i));
+		}
+		newMetric.setMeasUnits(clonedList);
+		newMetric.setMeasurementProcess(this.measurementProcess);
+		newMetric.setMetricType(this.metricType);
+		newMetric.setScaleType(this.scaleType);
+		return newMetric;
+	}
+
 }
