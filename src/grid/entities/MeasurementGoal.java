@@ -1,6 +1,15 @@
 package grid.entities;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import grid.interfaces.Updatable;
 /**
@@ -9,10 +18,12 @@ import grid.interfaces.Updatable;
  * @author Lorenzo La Banca
  *
  */
+@Entity
+@Table(name="MeasurementGoal")
 public class MeasurementGoal extends GridEntity implements Updatable{
-	String description;
-	String interpretationModel;
-	ArrayList<Question> questionList;
+	String description			=	"";
+	String interpretationModel	=	"";
+	List<Question> questionList	=	new ArrayList<Question>();
 	
 	/**
 	 * returns a description of the measurement goal
@@ -40,13 +51,17 @@ public class MeasurementGoal extends GridEntity implements Updatable{
 		this.interpretationModel = interpretationModel;
 	}
 
-
-	public ArrayList<Question> getQuestionList() {
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "MeasurementGoalToQuestion", joinColumns = { 
+			@JoinColumn(name = "goalID", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "quesID", 
+					nullable = false, updatable = false) })
+	public List<Question> getQuestionList() {
 		return questionList;
 	}
 
 
-	public void setQuestionList(ArrayList<Question> questionList) {
+	public void setQuestionList(List<Question> questionList) {
 		this.questionList = questionList;
 	}
 

@@ -1,9 +1,18 @@
 package grid.entities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import grid.interfaces.Updatable;
 
@@ -24,10 +33,10 @@ public class Goal extends GridEntity implements Updatable{
 	private	String 				context			=	"";
 	@Column(name="description")
 	private String 				description		=	"";
-	//TODO one to one relation
+	
 	private MeasurementGoal		measurementGoal	=	null;
-	//TODO many to many relation
-	private ArrayList<Strategy> strategyList	=	null;
+	
+	private List<Strategy> 		strategyList	=	new ArrayList<Strategy>();
 	
 	/**
 	 * Returns a goal assumption
@@ -81,6 +90,8 @@ public class Goal extends GridEntity implements Updatable{
 	 * Returns a measurement goal referenced for this goal
 	 * @return measurement goal instance
 	 */
+	@ManyToOne
+	@JoinColumn(name="measurementGoal")
 	public MeasurementGoal getMeasurementGoal() {
 		return measurementGoal;
 	}
@@ -97,7 +108,12 @@ public class Goal extends GridEntity implements Updatable{
 	 * Returns the list of strategies for this goal
 	 * @return list of strategies
 	 */
-	public ArrayList<Strategy> getStrategyList() {
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "GoalToStrategyList", joinColumns = { 
+			@JoinColumn(name = "goalID", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "strID", 
+					nullable = false, updatable = false) })
+	public List<Strategy> getStrategyList() {
 		return strategyList;
 	}
 
@@ -105,7 +121,7 @@ public class Goal extends GridEntity implements Updatable{
 	 * Sets the list of strategies for this goal
 	 * @param strategyList list of strategies to be assigned for this goal
 	 */
-	public void setStrategyList(ArrayList<Strategy> strategyList) {
+	public void setStrategyList(List<Strategy> strategyList) {
 		this.strategyList = strategyList;
 	}
 

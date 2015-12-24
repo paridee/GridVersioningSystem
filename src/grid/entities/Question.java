@@ -1,20 +1,36 @@
 package grid.entities;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import grid.interfaces.Updatable;
 
+@Entity
+@Table(name="Question")
 public class Question extends GridEntity implements Updatable{
 
-	private ArrayList<Metric> 	metricList;
+	private List<Metric> 	metricList	=	new ArrayList();
 	private String 				question;
 	
-	public ArrayList<Metric> getMetricList() {
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "QuestionToMetric", joinColumns = { 
+			@JoinColumn(name = "quesID", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "metrID", 
+					nullable = false, updatable = false) })
+	public List<Metric> getMetricList() {
 		return metricList;
 	}
 
 
-	public void setMetricList(ArrayList<Metric> metricList) {
+	public void setMetricList(List<Metric> metricList) {
 		this.metricList = metricList;
 	}
 
