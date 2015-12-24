@@ -3,7 +3,9 @@ package grid;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
+import grid.DAOImpl.GoalDAOImpl;
 import grid.entities.Goal;
 import grid.entities.MeasurementGoal;
 import grid.entities.Metric;
@@ -15,8 +17,23 @@ public class TestMainClass {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	    System.out.println("Che Dio ci assista...");
-		Session session = HibernateUtil.getSessionFactory().openSession();
-
+		SessionFactory sessionF = HibernateUtil.getSessionFactory();
+		Session session			=	sessionF.getCurrentSession();
+		System.out.println("Open Session: "+session);
+		Session session2		=	sessionF.getCurrentSession();
+		System.out.println("Open Session 2:"+session2+" "+(session2==session));
+		Session session3		=	sessionF.getCurrentSession();
+		System.out.println("Open Session 3:"+session3+" "+(session2==session3)+" "+(session==session3));
+		session.beginTransaction();
+		Goal testg		=	new Goal();
+		testg.setDescription("pippogoal");
+		testg.setLabel("goal1");
+		testg.setVersion("1.0.0");
+		GoalDAOImpl	gdao	=	new GoalDAOImpl();
+		gdao.setSessionFactory(sessionF);
+		gdao.addGoal(testg);
+		session.getTransaction().commit();
+/*
 		session.beginTransaction();
 		Metric testm	=	new Metric();
 		testm.setDescription("pippo");
@@ -42,13 +59,13 @@ public class TestMainClass {
 		/*Goal test	=	new Goal();
 		test.setDescription("pippo");
 		test.setContext("pasquale");
-		test.setAssumption("peppino");*/
+		test.setAssumption("peppino");
 		session.save(tests);
 		session.save(testg);
 		session.save(testq);
 		session.save(testm);
 		session.save(testmg);
-		session.getTransaction().commit();
+		session.getTransaction().commit();*/
 		System.out.println("Amen");
 
 	}

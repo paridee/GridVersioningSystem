@@ -13,7 +13,7 @@ public interface GridDAO {
 	public List<Grid> listGrid();
 	public Grid getGridById(int id);
 	public Grid getLatestGrid(int id);
-	public ArrayList<Grid> getGridLog(String label);
+	public List<Grid> getGridLog(String label);
 	public void removeGrid(int id);
 	public void setSessionFactory(SessionFactory sessionFactory);
 }

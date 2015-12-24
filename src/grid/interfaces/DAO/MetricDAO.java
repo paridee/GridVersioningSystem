@@ -12,7 +12,7 @@ public interface MetricDAO {
 	public void updateMetric(Metric p);
 	public List<Metric> listMetrics();
 	public Metric getMetricById(int id);
-	public ArrayList<Metric> getMetricLog(String label);
+	public List<Metric> getMetricLog(String label);
 	public void removeMetric(int id);
 	public void setSessionFactory(SessionFactory sessionFactory);
 }

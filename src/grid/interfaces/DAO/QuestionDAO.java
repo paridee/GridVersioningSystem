@@ -12,7 +12,7 @@ public interface QuestionDAO {
 	public void updateQuestion(Question p);
 	public List<Question> listQuestion();
 	public Question getQuestionById(int id);
-	public ArrayList<Question> getQuestionLog(String label);
+	public List<Question> getQuestionLog(String label);
 	public void removeQuestion(int id);
 	public void setSessionFactory(SessionFactory sessionFactory);
 }

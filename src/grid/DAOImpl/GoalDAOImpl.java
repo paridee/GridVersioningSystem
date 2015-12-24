@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import grid.entities.Goal;
 import grid.interfaces.DAO.GoalDAO;
 
-@Repository //TODO remove comment when using spring, this annotates a DAO for the framework
+@Repository
 public class GoalDAOImpl implements GoalDAO {
 
 	private static final Logger logger	=	LoggerFactory.getLogger(GoalDAOImpl.class);
@@ -25,16 +25,19 @@ public class GoalDAOImpl implements GoalDAO {
 
 	@Override
 	public void addGoal(Goal g) {
-		// TODO Auto-generated method stub
-		
+		Session	session	=	this.sessionFactory.getCurrentSession();
+		session.persist(g);
+		logger.info("GoalDAOImpl: added a new Goal on persistence layer");
 	}
 
 	@Override
-	public void updateGoal(Goal p) {
-		// TODO Auto-generated method stub
-		
+	public void updateGoal(Goal g) {
+		Session	session	=	this.sessionFactory.getCurrentSession();
+		session.update(g);
+		logger.info("GoalDAOImpl: updated a Goal on persistence layer");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Goal> listGoals() {
 		Session session				=	this.sessionFactory.getCurrentSession();
@@ -54,15 +57,23 @@ public class GoalDAOImpl implements GoalDAO {
 	}
 
 	@Override
-	public ArrayList<Goal> getGoalLog(String label) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Goal> getGoalLog(String label) {
+		Session session				=	this.sessionFactory.getCurrentSession();
+		List<Goal> goalList	=	session.createQuery("from Goal G where G.label = "+label).list();
+		for(Goal g : goalList){
+			logger.info("Goal List::"+g);
+		}
+		return goalList;
 	}
 
 	@Override
 	public void removeGoal(int id) {
-		// TODO Auto-generated method stub
-		
+		Session session	=	this.sessionFactory.getCurrentSession();
+		Goal g			=	(Goal)	session.load(Goal.class, new Integer(id));
+		if(g!=null){
+			session.delete(g);
+		}
+		logger.info("GoalDAOImpl Goal deleted successfully");
 	}
 
 

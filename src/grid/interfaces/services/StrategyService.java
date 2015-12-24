@@ -1,4 +1,4 @@
-package grid.services;
+package grid.interfaces.services;
 
 public interface StrategyService {
 

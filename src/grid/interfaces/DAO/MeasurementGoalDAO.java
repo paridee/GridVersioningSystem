@@ -12,7 +12,7 @@ public interface MeasurementGoalDAO {
 	public void updateGoal(MeasurementGoal p);
 	public List<MeasurementGoal> listGoals();
 	public MeasurementGoal getGoalById(int id);
-	public ArrayList<MeasurementGoal> getGoalLog(String label);
+	public List<MeasurementGoal> getGoalLog(String label);
 	public void removeGoal(int id);
 	public void setSessionFactory(SessionFactory sessionFactory);
 }
