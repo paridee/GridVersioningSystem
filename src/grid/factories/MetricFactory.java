@@ -2,12 +2,12 @@ package grid.factories;
 
 import java.util.HashMap;
 
-import grid.entities.GridEntity;
+import grid.entities.GridElement;
 
 public class MetricFactory extends GridElementFactory{
 
 	@Override
-	GridEntity loadFromJson(String json, HashMap<String, GridEntity> loadedEntities) {
+	GridElement loadFromJson(String json, HashMap<String, GridElement> loadedEntities) {
 		// TODO Auto-generated method stub
 		return null;
 	}

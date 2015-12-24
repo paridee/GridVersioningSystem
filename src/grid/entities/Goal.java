@@ -26,7 +26,7 @@ import grid.interfaces.Updatable;
 
 @Entity
 @Table(name="Goal")
-public class Goal extends GridEntity implements Updatable{
+public class Goal extends GridElement implements Updatable{
 	@Column(name="assumption")
 	private String 				assumption		=	"";
 	@Column(name="context")
@@ -127,7 +127,7 @@ public class Goal extends GridEntity implements Updatable{
 
 
 	@Override
-	public ArrayList<GridEntity> update(GridEntity ge) {
+	public ArrayList<GridElement> update(GridElement ge) {
 		// TODO Auto-generated method stub
 		return null;
 	}

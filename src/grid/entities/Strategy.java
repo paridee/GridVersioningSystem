@@ -9,7 +9,7 @@ import grid.interfaces.Updatable;
 
 @Entity
 @Table(name="Strategy")
-public class Strategy extends GridEntity implements Updatable{
+public class Strategy extends GridElement implements Updatable{
 	
 	private String 			description;
 	private boolean			isTerminal	=	false;	//TODO manage boolean
@@ -57,7 +57,7 @@ public class Strategy extends GridEntity implements Updatable{
 
 
 	@Override
-	public ArrayList<GridEntity> update(GridEntity ge) {
+	public ArrayList<GridElement> update(GridElement ge) {
 		// TODO Auto-generated method stub
 		return null;
 	}

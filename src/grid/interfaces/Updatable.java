@@ -2,7 +2,7 @@ package grid.interfaces;
 
 import java.util.ArrayList;
 
-import grid.entities.GridEntity;
+import grid.entities.GridElement;
 
 /**
  * This interface has to be implemented by all the Grid Elements classes having a reference to another
@@ -17,5 +17,5 @@ public interface Updatable {
 	 * @param ge updated object replacing an older one
 	 * @return list of all GridEntity updated
 	 */
-	public ArrayList<GridEntity> update(GridEntity ge);
+	public ArrayList<GridElement> update(GridElement ge);
 }

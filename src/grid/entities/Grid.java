@@ -7,7 +7,7 @@ import grid.interfaces.Updatable;
 public class Grid implements Updatable{
 	public String 					version;
 	private ArrayList<Goal> 		mainGoals				=	null;
-	private ArrayList<GridEntity> 	elementsOfGrid	=	null;
+	private ArrayList<GridElement> 	elementsOfGrid	=	null;
 	private Project					project;
 	private ArrayList<String>		activityList;
 	private ArrayList<String>		dataEntryList;
@@ -17,7 +17,7 @@ public class Grid implements Updatable{
 	
 
 	@Override
-	public ArrayList<GridEntity> update(GridEntity ge) {
+	public ArrayList<GridElement> update(GridElement ge) {
 		// TODO Auto-generated method stub
 		return null;
 	}

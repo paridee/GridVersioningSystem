@@ -53,7 +53,7 @@ public class MetricDAOImpl implements MetricDAO {
 	public Metric getMetricById(int id) {
 		Session currentSession	=	this.sessionFactory.getCurrentSession();
 		Metric	m			=	(Metric) currentSession.load(Metric.class,new Integer(id));
-		logger.info("MeasurementGoal loaded::"+m);
+		logger.info("Metric loaded::"+m);
 		return m;
 	}
 

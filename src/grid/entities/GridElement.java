@@ -15,7 +15,7 @@ import javax.persistence.InheritanceType;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class GridEntity {
+public abstract class GridElement {
 	
 	@Column(name = "label", nullable = false, length = 20)
 	public String 	label;

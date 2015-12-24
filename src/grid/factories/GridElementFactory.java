@@ -2,7 +2,7 @@ package grid.factories;
 
 import java.util.HashMap;
 
-import grid.entities.GridEntity;
+import grid.entities.GridElement;
 
 /**
  * 
@@ -23,5 +23,5 @@ public abstract class GridElementFactory {
 	 * will not be loaded again
 	 * @return entity representing the json input
 	 */
-	abstract GridEntity loadFromJson(String json,HashMap<String,GridEntity>loadedEntities);
+	abstract GridElement loadFromJson(String json,HashMap<String,GridElement>loadedEntities);
 }

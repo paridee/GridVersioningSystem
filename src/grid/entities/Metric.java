@@ -14,7 +14,7 @@ import grid.interfaces.Updatable;
 
 @Entity
 @Table(name="Metric")
-public class Metric extends GridEntity implements Updatable{
+public class Metric extends GridElement implements Updatable{
 	@Column(name="count")
 	public int 					count				=	0;
 	@Column(name="description")
@@ -91,7 +91,7 @@ public class Metric extends GridEntity implements Updatable{
 
 
 	@Override
-	public ArrayList<GridEntity> update(GridEntity ge) {
+	public ArrayList<GridElement> update(GridElement ge) {
 		// TODO Auto-generated method stub
 		return null;
 	}

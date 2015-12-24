@@ -20,7 +20,7 @@ import grid.interfaces.Updatable;
  */
 @Entity
 @Table(name="MeasurementGoal")
-public class MeasurementGoal extends GridEntity implements Updatable{
+public class MeasurementGoal extends GridElement implements Updatable{
 	String description			=	"";
 	String interpretationModel	=	"";
 	List<Question> questionList	=	new ArrayList<Question>();
@@ -67,7 +67,7 @@ public class MeasurementGoal extends GridEntity implements Updatable{
 
 
 	@Override
-	public ArrayList<GridEntity> update(GridEntity ge) {
+	public ArrayList<GridElement> update(GridElement ge) {
 		// TODO Auto-generated method stub
 		return null;
 	}
