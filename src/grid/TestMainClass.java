@@ -1,17 +1,23 @@
 package grid;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import grid.DAOImpl.GridDAOImpl;
 import grid.DAOImpl.GridElementDAOImpl;
 import grid.entities.Goal;
+import grid.entities.Grid;
 import grid.entities.MeasurementGoal;
 import grid.entities.Metric;
+import grid.entities.Project;
 import grid.entities.Question;
 import grid.entities.Strategy;
+import grid.interfaces.services.GridService;
 import grid.services.GridElementServiceImpl;
+import grid.services.GridServiceImpl;
 
 public class TestMainClass {
 
@@ -33,6 +39,10 @@ public class TestMainClass {
 		GridElementServiceImpl	serv	=	new GridElementServiceImpl();
 		gdao.setSessionFactory(sessionF);
 		serv.setGoalDAO(gdao);
+		Project stocazzo	=	new Project();
+		stocazzo.setDescription("mannaggia il bambinello");
+		Grid merda			=	new Grid();
+		merda.setProject(stocazzo);
 		serv.addGridElement(testg);
 		Metric testm	=	new Metric();
 		testm.setDescription("pippo");
@@ -40,6 +50,14 @@ public class TestMainClass {
 		testg		=	new Goal();
 		testg.setDescription("pippogoal");
 		testg.setLabel("goal1");
+		ArrayList<Goal> merdaGoals	=	new ArrayList<Goal>();
+		merdaGoals.add(testg);
+		merda.setMainGoals(merdaGoals);
+		GridServiceImpl merdaService	=	new GridServiceImpl();
+		GridDAOImpl gDAO	=	new GridDAOImpl();
+		gDAO.setSessionFactory(sessionF);
+		merdaService.setGridDAO(gDAO);
+		merdaService.addGrid(merda);
 		MeasurementGoal testmg	=	new MeasurementGoal();
 		testmg.setDescription("pippoMgoal");
 		testmg.setLabel("mg1");
@@ -48,8 +66,9 @@ public class TestMainClass {
 		testq.setLabel("qu1");
 		Strategy tests	=	new Strategy();
 		tests.setLabel("str1");
-		List str	=	testg.getStrategyList();
+		List<Strategy> str	=	testg.getStrategyList();
 		str.add(tests);
+		testg.setStrategyList(str);
 		Goal test	=	new Goal();
 		test.setDescription("pippo");
 		test.setContext("pasquale");

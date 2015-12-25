@@ -4,8 +4,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import grid.entities.Goal;
+import grid.entities.Grid;
 import grid.entities.MeasurementGoal;
 import grid.entities.Metric;
+import grid.entities.Project;
 import grid.entities.Question;
 import grid.entities.Strategy;
 
@@ -20,7 +22,9 @@ public class HibernateUtil {
         	fConfiguration.addAnnotatedClass(Goal.class);
         	fConfiguration.addAnnotatedClass(Question.class);
         	fConfiguration.addAnnotatedClass(Strategy.class);
-        	fConfiguration.addAnnotatedClass(MeasurementGoal.class);;
+        	fConfiguration.addAnnotatedClass(MeasurementGoal.class);
+        	fConfiguration.addAnnotatedClass(Grid.class);
+        	fConfiguration.addAnnotatedClass(Project.class);
             sessionFactory = fConfiguration.configure().buildSessionFactory();
         } catch (Throwable e) {
             throw new ExceptionInInitializerError(e);
