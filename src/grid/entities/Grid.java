@@ -23,8 +23,8 @@ public class Grid implements Updatable{
 
 	private int id;
 	public int 			version=1; //TODO make String Version
-	private List<Goal> 		mainGoals				=	null;
-	private Project					project;
+	private List<Goal> 	mainGoals				=	null;
+	private Project		project;
 	//TODO mancano attributi della grid di Serena e Marco
 	
 	@Id

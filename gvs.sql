@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 25, 2015 alle 12:39
+-- Creato il: Dic 27, 2015 alle 13:13
 -- Versione del server: 5.6.27-0ubuntu1
 -- Versione PHP: 5.6.11-1ubuntu3.1
 
@@ -41,29 +41,10 @@ CREATE TABLE IF NOT EXISTS `Goal` (
 --
 
 INSERT INTO `Goal` (`assumption`, `description`, `context`, `id`, `label`, `version`, `measurementGoal`) VALUES
-('', 'pippogoal', '', 1, 'goal1', 10, NULL),
-('', 'pippogoal', '', 32768, 'goal1', 10, NULL),
-('', 'pippogoal', '', 65536, 'goal1', 10, NULL),
-('', 'pippogoal', '', 65538, 'goal1', 10, 65541),
-('', 'pippogoal', '', 98304, 'goal1', 10, NULL),
-('', 'pippogoal', '', 98306, 'goal1', 10, 98308),
-('', 'pippogoal', '', 196608, 'goal1', 1, NULL),
-('', 'pippogoal', '', 196610, 'goal1', 1, 196612),
-('', 'pippogoal', '', 262144, 'goal1', 1, NULL),
-('', 'pippogoal', '', 262146, 'goal1', 1, 262148),
-('', 'pippogoal', '', 262150, 'goal1', 2, 262148),
-('', 'pippogoal', '', 294912, 'goal1', 1, NULL),
-('', 'pippogoal', '', 294914, 'goal1', 1, 294916),
-('', 'pippogoal', '', 294918, 'goal1', 2, 294916),
-('', 'pippogoal', '', 393216, 'goal1', 1, NULL),
-('', 'pippogoal', '', 393218, 'goal1', 1, 393220),
-('', 'pippogoal', '', 393222, 'goal1', 2, 393220),
-('', 'pippogoal', '', 425984, 'goal1', 1, NULL),
-('', 'pippogoal', '', 425986, 'goal1', 1, 425988),
-('', 'pippogoal', '', 425990, 'goal1', 2, 425988),
-('', 'pippogoal', '', 491520, 'goal1', 1, NULL),
-('', 'pippogoal', '', 491521, 'goal1', 1, 491524),
-('', 'pippogoal', '', 491526, 'goal1', 2, 491524);
+('assumption1', 'goal1', 'context1', 1, 'g1', 1, 2),
+('assumption2', 'goal2', 'context2', 9, 'g2', 1, 10),
+('assumption1', 'goal1', 'context1', 32768, 'g1', 1, 32769),
+('assumption2', 'goal2', 'context2', 32776, 'g2', 1, 32777);
 
 -- --------------------------------------------------------
 
@@ -81,23 +62,12 @@ CREATE TABLE IF NOT EXISTS `GoalToStrategyList` (
 --
 
 INSERT INTO `GoalToStrategyList` (`goalID`, `strID`) VALUES
-(753665, 753664),
-(786433, 786432),
-(819201, 819200),
-(851969, 851968),
-(65538, 65537),
-(98306, 98307),
-(196610, 196611),
-(262146, 262147),
-(262150, 262147),
-(294914, 294915),
-(294918, 294915),
-(393218, 393219),
-(393222, 393219),
-(425986, 425987),
-(425990, 425987),
-(491521, 491523),
-(491526, 491523);
+(1, 8),
+(9, 13),
+(9, 14),
+(32768, 32775),
+(32776, 32780),
+(32776, 32781);
 
 -- --------------------------------------------------------
 
@@ -116,9 +86,8 @@ CREATE TABLE IF NOT EXISTS `Grid` (
 --
 
 INSERT INTO `Grid` (`id`, `version`, `projID`) VALUES
-(65536, 1, 32768),
-(98304, 1, 65536),
-(163840, 1, 131072);
+(1, 1, 1),
+(32768, 1, 32768);
 
 -- --------------------------------------------------------
 
@@ -136,7 +105,10 @@ CREATE TABLE IF NOT EXISTS `GridToRootGoal` (
 --
 
 INSERT INTO `GridToRootGoal` (`gridID`, `goalID`) VALUES
-(163840, 491521);
+(1, 1),
+(1, 9),
+(32768, 32768),
+(32768, 32776);
 
 -- --------------------------------------------------------
 
@@ -154,10 +126,9 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequences` (
 --
 
 INSERT INTO `hibernate_sequences` (`sequence_name`, `sequence_next_hi_value`) VALUES
-('GridEntity', 28),
-('GridElement', 16),
-('Grid', 6),
-('Project', 5);
+('Grid', 2),
+('Project', 2),
+('GridElement', 2);
 
 -- --------------------------------------------------------
 
@@ -178,12 +149,10 @@ CREATE TABLE IF NOT EXISTS `MeasurementGoal` (
 --
 
 INSERT INTO `MeasurementGoal` (`id`, `label`, `version`, `description`, `interpretationModel`) VALUES
-(196612, 'mg1', 1, 'pippoMgoal', ''),
-(262148, 'mg1', 1, 'pippoMgoal', ''),
-(294916, 'mg1', 1, 'pippoMgoal', ''),
-(393220, 'mg1', 1, 'pippoMgoal', ''),
-(425988, 'mg1', 1, 'pippoMgoal', ''),
-(491524, 'mg1', 1, 'pippoMgoal', '');
+(2, 'mg1', 1, 'meas goal 1', 'interpr1'),
+(10, 'mg2', 1, 'meas goal 2', 'interpr2'),
+(32769, 'mg1', 1, 'meas goal 1', 'interpr1'),
+(32777, 'mg2', 1, 'meas goal 2', 'interpr2');
 
 -- --------------------------------------------------------
 
@@ -195,6 +164,18 @@ CREATE TABLE IF NOT EXISTS `MeasurementGoalToQuestion` (
   `goalID` int(11) NOT NULL,
   `quesID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `MeasurementGoalToQuestion`
+--
+
+INSERT INTO `MeasurementGoalToQuestion` (`goalID`, `quesID`) VALUES
+(2, 3),
+(2, 5),
+(10, 11),
+(32769, 32770),
+(32769, 32772),
+(32777, 32778);
 
 -- --------------------------------------------------------
 
@@ -218,12 +199,14 @@ CREATE TABLE IF NOT EXISTS `Metric` (
 --
 
 INSERT INTO `Metric` (`count`, `description`, `measurementProcess`, `metricType`, `scaleType`, `label`, `id`, `version`) VALUES
-(0, 'pippo', '', '', '', 'metric1', 196609, 1),
-(0, 'pippo', '', '', '', 'metric1', 262145, 1),
-(0, 'pippo', '', '', '', 'metric1', 294913, 1),
-(0, 'pippo', '', '', '', 'metric1', 393217, 1),
-(0, 'pippo', '', '', '', 'metric1', 425985, 1),
-(0, 'pippo', '', '', '', 'metric1', 491522, 1);
+(0, 'm3 descr', 'm3 mProcess', 'BASE', 'm3 stype', 'm3', 4, 1),
+(0, 'm2 descr', 'm2 mProcess', 'BASE', 'm2 stype', 'm2', 6, 1),
+(0, 'm1 descr', 'm1 mProcess', 'BASE', 'm1 stype', 'm1', 7, 1),
+(0, 'm4 descr', 'm4 mProcess', 'BASE', 'm4 stype', 'm4', 12, 1),
+(0, 'm3 descr', 'm3 mProcess', 'BASE', 'm3 stype', 'm3', 32771, 1),
+(0, 'm2 descr', 'm2 mProcess', 'BASE', 'm2 stype', 'm2', 32773, 1),
+(0, 'm1 descr', 'm1 mProcess', 'BASE', 'm1 stype', 'm1', 32774, 1),
+(0, 'm4 descr', 'm4 mProcess', 'BASE', 'm4 stype', 'm4', 32779, 1);
 
 -- --------------------------------------------------------
 
@@ -254,9 +237,19 @@ CREATE TABLE IF NOT EXISTS `Project` (
 --
 
 INSERT INTO `Project` (`id`, `projectId`, `description`, `creationDate`) VALUES
-(32768, NULL, 'mannaggia il bambinello', NULL),
-(65536, NULL, 'mannaggia il bambinello', NULL),
-(131072, NULL, 'mannaggia il bambinello', NULL);
+(1, 'progetto di prova', 'descrizione progetto', '18/02/2015 11:51'),
+(32768, 'progetto di prova', 'descrizione progetto', '18/02/2015 11:51');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `ProjectMeasUnits`
+--
+
+CREATE TABLE IF NOT EXISTS `ProjectMeasUnits` (
+  `projID` int(11) NOT NULL,
+  `measUnit` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -268,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `Question` (
   `id` int(11) NOT NULL,
   `label` text NOT NULL,
   `version` int(11) NOT NULL,
-  `question` int(11) DEFAULT NULL
+  `question` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -276,12 +269,12 @@ CREATE TABLE IF NOT EXISTS `Question` (
 --
 
 INSERT INTO `Question` (`id`, `label`, `version`, `question`) VALUES
-(196613, 'qu1', 1, NULL),
-(262149, 'qu1', 1, NULL),
-(294917, 'qu1', 1, NULL),
-(393221, 'qu1', 1, NULL),
-(425989, 'qu1', 1, NULL),
-(491525, 'qu1', 1, NULL);
+(3, 'q2', 1, 'question 2'),
+(5, 'q1', 1, 'question 1'),
+(11, 'q3', 1, 'question 3'),
+(32770, 'q2', 1, 'question 2'),
+(32772, 'q1', 1, 'question 1'),
+(32778, 'q3', 1, 'question 3');
 
 -- --------------------------------------------------------
 
@@ -293,6 +286,20 @@ CREATE TABLE IF NOT EXISTS `QuestionToMetric` (
   `quesID` int(11) NOT NULL,
   `metrID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `QuestionToMetric`
+--
+
+INSERT INTO `QuestionToMetric` (`quesID`, `metrID`) VALUES
+(3, 4),
+(5, 6),
+(5, 7),
+(11, 12),
+(32770, 32771),
+(32772, 32773),
+(32772, 32774),
+(32778, 32779);
 
 -- --------------------------------------------------------
 
@@ -314,12 +321,12 @@ CREATE TABLE IF NOT EXISTS `Strategy` (
 --
 
 INSERT INTO `Strategy` (`id`, `version`, `label`, `description`, `isTerminal`, `strategicProjectId`) VALUES
-(196611, 1, 'str1', NULL, 0, NULL),
-(262147, 1, 'str1', NULL, 0, NULL),
-(294915, 1, 'str1', NULL, 0, NULL),
-(393219, 1, 'str1', NULL, 0, NULL),
-(425987, 1, 'str1', NULL, 0, NULL),
-(491523, 1, 'str1', NULL, 0, NULL);
+(8, 1, 's1', 'strat1', 0, '0'),
+(13, 1, 's3', 'strat3', 1, '0'),
+(14, 1, 's2', 'strat2', 1, '0'),
+(32775, 1, 's1', 'strat1', 0, '0'),
+(32780, 1, 's3', 'strat3', 1, '0'),
+(32781, 1, 's2', 'strat2', 1, '0');
 
 -- --------------------------------------------------------
 
@@ -331,6 +338,14 @@ CREATE TABLE IF NOT EXISTS `StrategyToGoalList` (
   `strID` int(11) NOT NULL,
   `goalID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `StrategyToGoalList`
+--
+
+INSERT INTO `StrategyToGoalList` (`strID`, `goalID`) VALUES
+(8, 9),
+(32775, 32776);
 
 --
 -- Indici per le tabelle scaricate

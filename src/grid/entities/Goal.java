@@ -90,7 +90,7 @@ public class Goal extends GridElement implements Updatable{
 	 * Returns a measurement goal referenced for this goal
 	 * @return measurement goal instance
 	 */
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="measurementGoal")
 	public MeasurementGoal getMeasurementGoal() {
 		return measurementGoal;

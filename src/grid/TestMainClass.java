@@ -1,5 +1,8 @@
 package grid;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +29,53 @@ public class TestMainClass {
 	    System.out.println("Che Dio ci assista...");
 		SessionFactory sessionF = HibernateUtil.getSessionFactory();
 		Session session			=	sessionF.getCurrentSession();
+		session.beginTransaction();
+		
+		GridServiceImpl merdaService	=	new GridServiceImpl();
+		GridDAOImpl gDAO	=	new GridDAOImpl();
+		gDAO.setSessionFactory(sessionF);
+		merdaService.setGridDAO(gDAO);
+		List<Grid> pippo	=	merdaService.listAllGrids();
+		System.out.println("Grid caricate "+pippo.size());
+		for(int i=0;i<pippo.size();i++){
+			Grid iesima	=	pippo.get(i);
+			List<Goal> listagoal	=	iesima.getMainGoals();
+			System.out.println("Grid numero "+i+" caricati "+listagoal.size()+" goals");
+			for(int j=0;j<listagoal.size();j++){
+				System.out.println("Grid numero "+i+" goal numero "+j+" caricate "+listagoal.get(j).getStrategyList().size()+" strategies");
+			}
+		}
+		
+		/* test load grid da JSON
+		
+		String everything	=	"";
+		try(BufferedReader br = new BufferedReader(new FileReader("grid.txt"))) {
+		    StringBuilder sb = new StringBuilder();
+		    String line = br.readLine();
+
+		    while (line != null) {
+		        sb.append(line);
+		        sb.append(System.lineSeparator());
+		        line = br.readLine();
+		    }
+		    everything = sb.toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Grid testGrid	=	JSONFactory.loadFromJson(everything);
+		GridServiceImpl merdaService	=	new GridServiceImpl();
+		GridDAOImpl gDAO	=	new GridDAOImpl();
+		gDAO.setSessionFactory(sessionF);
+		merdaService.setGridDAO(gDAO);
+		merdaService.addGrid(testGrid);*/
+		/*
 		System.out.println("Open Session: "+session);
 		Session session2		=	sessionF.getCurrentSession();
 		System.out.println("Open Session 2:"+session2+" "+(session2==session));
 		Session session3		=	sessionF.getCurrentSession();
 		System.out.println("Open Session 3:"+session3+" "+(session2==session3)+" "+(session==session3));
-		session.beginTransaction();
+		
 		Goal testg		=	new Goal();
 		testg.setDescription("pippogoal");
 		testg.setLabel("goal1");
@@ -78,7 +122,7 @@ public class TestMainClass {
 		serv.addGridElement(testmg);
 		serv.addGridElement(testq);
 		serv.addGridElement(tests);
-		serv.upgradeGridElement(testg);
+		serv.upgradeGridElement(testg);*/
 		session.getTransaction().commit();
 		System.out.println("Amen");
 
