@@ -92,8 +92,7 @@ public class Metric extends GridElement implements Updatable{
 
 	@Override
 	public ArrayList<GridElement> update(GridElement ge) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<GridElement>();
 	}
 
 

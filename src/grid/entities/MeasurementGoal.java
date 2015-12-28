@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import grid.Utils;
 import grid.interfaces.Updatable;
 /**
  * Class modeling a Measurement goal element on GQM+S Grid
@@ -68,8 +69,23 @@ public class MeasurementGoal extends GridElement implements Updatable{
 
 	@Override
 	public ArrayList<GridElement> update(GridElement ge) {
-		// TODO Auto-generated method stub
-		return null;
+		MeasurementGoal updated	=	(MeasurementGoal) this.clone();
+		updated.setVersion(this.getVersion()+1);
+		ArrayList<GridElement> returnList	=	new ArrayList<GridElement>();
+		boolean addThis						=	false;	
+		for(int i=0;i<this.questionList.size();i++){
+			if(this.questionList.get(i).getLabel().equals(ge.getLabel())){
+				updated.questionList.set(i, (Question) ge);
+				addThis=true;
+			}
+		}
+		for(int i=0;i<this.questionList.size();i++){
+			Utils.mergeLists(returnList, this.questionList.get(i).update(ge));
+		}
+		if(addThis==true){
+			returnList.add(updated);
+		}
+		return returnList;
 	}
 
 	@Override

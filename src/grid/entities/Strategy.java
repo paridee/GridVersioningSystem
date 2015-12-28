@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import grid.Utils;
 import grid.interfaces.Updatable;
 
 @Entity
@@ -51,7 +52,7 @@ public class Strategy extends GridElement implements Updatable{
 		this.strategicProjectId = strategicProjectId;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "StrategyToGoalList", joinColumns = { 
 			@JoinColumn(name = "strID", nullable = false, updatable = false) }, 
 			inverseJoinColumns = { @JoinColumn(name = "goalID", 
@@ -69,8 +70,23 @@ public class Strategy extends GridElement implements Updatable{
 
 	@Override
 	public ArrayList<GridElement> update(GridElement ge) {
-		// TODO Auto-generated method stub
-		return null;
+		Strategy updated	=	(Strategy)this.clone();
+		updated.setVersion(this.getVersion()+1);
+		ArrayList<GridElement> returnList	=	new ArrayList<GridElement>();
+		boolean addThis						=	false;	
+		for(int i=0;i<this.goalList.size();i++){
+			if(this.goalList.get(i).getLabel().equals(ge.getLabel())){
+				updated.goalList.set(i, (Goal) ge);
+				addThis=true;
+			}
+		}
+		for(int i=0;i<this.goalList.size();i++){
+			Utils.mergeLists(returnList, this.goalList.get(i).update(ge));
+		}
+		if(addThis==true){
+			returnList.add(updated);
+		}
+		return returnList;
 	}
 
 

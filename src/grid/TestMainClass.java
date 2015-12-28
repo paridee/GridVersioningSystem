@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -33,21 +34,17 @@ public class TestMainClass {
 		
 		GridServiceImpl merdaService	=	new GridServiceImpl();
 		GridDAOImpl gDAO	=	new GridDAOImpl();
+		GridElementServiceImpl elService	=	new GridElementServiceImpl();
+		GridElementDAOImpl	elDao	=	new GridElementDAOImpl();
+		elDao.setSessionFactory(sessionF);
+		elService.setGridElementDAO(elDao);
+		merdaService.setGridElementService(elService);
 		gDAO.setSessionFactory(sessionF);
 		merdaService.setGridDAO(gDAO);
-		List<Grid> pippo	=	merdaService.listAllGrids();
-		System.out.println("Grid caricate "+pippo.size());
-		for(int i=0;i<pippo.size();i++){
-			Grid iesima	=	pippo.get(i);
-			List<Goal> listagoal	=	iesima.getMainGoals();
-			System.out.println("Grid numero "+i+" caricati "+listagoal.size()+" goals");
-			for(int j=0;j<listagoal.size();j++){
-				System.out.println("Grid numero "+i+" goal numero "+j+" caricate "+listagoal.get(j).getStrategyList().size()+" strategies");
-			}
-		}
+
 		
-		/* test load grid da JSON
-		
+		// test load grid da JSON
+		/*
 		String everything	=	"";
 		try(BufferedReader br = new BufferedReader(new FileReader("grid.txt"))) {
 		    StringBuilder sb = new StringBuilder();
@@ -64,11 +61,29 @@ public class TestMainClass {
 			e.printStackTrace();
 		}
 		Grid testGrid	=	JSONFactory.loadFromJson(everything);
-		GridServiceImpl merdaService	=	new GridServiceImpl();
-		GridDAOImpl gDAO	=	new GridDAOImpl();
 		gDAO.setSessionFactory(sessionF);
 		merdaService.setGridDAO(gDAO);
 		merdaService.addGrid(testGrid);*/
+		
+		
+		
+		//load Grid da DB
+		
+		
+		List<Grid> pippo	=	merdaService.listAllGrids();
+		System.out.println("Grid caricate "+pippo.size());
+		Grid testupdate	=	null;
+		for(int i=0;i<pippo.size();i++){
+			Grid iesima	=	pippo.get(i);
+			List<Goal> listagoal	=	iesima.getMainGoals();
+			System.out.println("Grid numero "+i+" caricati "+listagoal.size()+" goals");
+			for(int j=0;j<listagoal.size();j++){
+				System.out.println("Grid numero "+i+" goal numero "+j+" caricate "+listagoal.get(j).getStrategyList().size()+" strategies");
+			}
+			testupdate	=	iesima;
+		}
+		
+		
 		/*
 		System.out.println("Open Session: "+session);
 		Session session2		=	sessionF.getCurrentSession();
@@ -123,6 +138,36 @@ public class TestMainClass {
 		serv.addGridElement(testq);
 		serv.addGridElement(tests);
 		serv.upgradeGridElement(testg);*/
+		
+		//session.getTransaction().commit();
+		
+		
+		
+		
+		List<Goal> goals	=	testupdate.getMainGoals();
+		System.out.println("CARICATO "+goals.size()+" GOALS");
+		for(int i=0;i<goals.size();i++){
+			System.out.println(goals.get(i).getLabel());
+			if(goals.get(i).getLabel().equals("g1")){
+				System.out.println(goals.get(i).getLabel()+" TROVATO");
+				List<Strategy> strategies	=	goals.get(i).getStrategyList();
+				for(int j=0;j<strategies.size();j++){
+					if(strategies.get(j).getLabel().equals("s1")){
+						List<Goal> goalsInf	=	strategies.get(j).getGoalList();
+						for(int k=0;k<goalsInf.size();k++){
+							if(goalsInf.get(k).getLabel().equals("g2")){
+								Goal clone	=	(Goal)goalsInf.get(k).clone();
+								clone.setDescription("modificatoTEST");
+								System.out.println("Aggiorno");
+								Grid newGrid	=	merdaService.updateGridElement(testupdate, clone);
+								strategies.get(j).setDescription("non deve salvare questo");
+								System.out.println("Aggiornato");
+							}
+						}
+					}
+				}
+			}
+		}
 		session.getTransaction().commit();
 		System.out.println("Amen");
 

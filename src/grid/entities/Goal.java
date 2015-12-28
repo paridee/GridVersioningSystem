@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import grid.Utils;
 import grid.interfaces.Updatable;
 
 /**
@@ -108,7 +110,7 @@ public class Goal extends GridElement implements Updatable{
 	 * Returns the list of strategies for this goal
 	 * @return list of strategies
 	 */
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "GoalToStrategyList", joinColumns = { 
 			@JoinColumn(name = "goalID", nullable = false, updatable = false) }, 
 			inverseJoinColumns = { @JoinColumn(name = "strID", 
@@ -128,8 +130,28 @@ public class Goal extends GridElement implements Updatable{
 
 	@Override
 	public ArrayList<GridElement> update(GridElement ge) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<GridElement> returnList	=	new ArrayList<GridElement>();
+		boolean addThis						=	false;	
+		Goal updated						=	(Goal) this.clone();
+		updated.setVersion(this.getVersion()+1);
+		if(this.measurementGoal.getLabel().equals(ge.getLabel())){
+			updated.setMeasurementGoal((MeasurementGoal)ge);
+			addThis	=	true;
+		}
+		for(int i=0;i<this.strategyList.size();i++){
+			if(this.strategyList.get(i).getLabel().equals(ge.getLabel())){
+				updated.strategyList.set(i, (Strategy) ge);
+				addThis=true;
+			}
+		}
+		Utils.mergeLists(returnList, this.measurementGoal.update(ge));
+		for(int i=0;i<this.strategyList.size();i++){
+			Utils.mergeLists(returnList, this.strategyList.get(i).update(ge));
+		}
+		if(addThis==true){
+			returnList.add(updated);
+		}
+		return returnList;
 	}
 
 	@Override

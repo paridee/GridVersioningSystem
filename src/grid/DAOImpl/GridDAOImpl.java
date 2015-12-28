@@ -86,5 +86,20 @@ public class GridDAOImpl implements GridDAO {
 		logger.info(g.getClass().getName()+" deleted successfully");		
 	}
 
+	@Override
+	public Grid upgradeGrid(Grid g) {
+		Grid upgraded	=	new Grid();
+		upgraded.setProject(g.getProject());
+		ArrayList<Goal> mainGoals	=	new ArrayList<Goal>();
+		List<Goal> oldGoals	=	g.getMainGoals();
+		for(int i=0;i<oldGoals.size();i++){
+			mainGoals.add(oldGoals.get(i));
+		}
+		upgraded.setMainGoals(mainGoals);
+		upgraded.setVersion(g.getVersion()+1);
+		this.addGrid(upgraded);
+		return upgraded;
+	}
+
 
 }

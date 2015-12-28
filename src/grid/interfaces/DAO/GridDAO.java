@@ -61,4 +61,6 @@ public interface GridDAO {
 	
 	//TODO check if needed in interface... probably has to be removed from here
 	public void setSessionFactory(SessionFactory sessionFactory);
+
+	public Grid upgradeGrid(Grid g);
 }

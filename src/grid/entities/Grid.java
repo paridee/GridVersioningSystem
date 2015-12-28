@@ -46,7 +46,7 @@ public class Grid implements Updatable{
 		this.version = version;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "GridToRootGoal", joinColumns = { 
 			@JoinColumn(name = "gridID", nullable = false, updatable = false) }, 
 			inverseJoinColumns = { @JoinColumn(name = "goalID", 

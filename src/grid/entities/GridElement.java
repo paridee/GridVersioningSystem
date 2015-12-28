@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Transient;
+
+import grid.Utils;
 
 /**
  * This abstract class contains all the common elements among all elements belonging to every element of the Grid

@@ -16,7 +16,7 @@ public class GridElementServiceImpl implements GridElementService {
 
 	private GridElementDao gridElementDao;
 	
-	public void setGoalDAO(GridElementDao gDAO) {
+	public void setGridElementDAO(GridElementDao gDAO) {
 		this.gridElementDao = gDAO;
 	}
 
