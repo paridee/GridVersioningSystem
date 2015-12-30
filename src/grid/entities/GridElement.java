@@ -16,20 +16,25 @@ import grid.Utils;
  * @author Paride Casulli
  * @author Lorenzo La Banca
  */
+
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class GridElement {
 	
-	@Column(name = "label", nullable = false, length = 20)
+	@Column(name 		= 	"label", 
+			nullable 	= 	false, 
+			length 		= 	20)
 	protected String 	label;
 	
 	protected int 		idElement;	//primary key
 	
-	@Column(name = "version", nullable = false, length = 20)
+	@Column(name 		= 	"version", 
+			nullable 	= 	false, 
+			length 		= 	20)
 	protected int 	version=1;
 	
 	/**
-	 * returns a label for this Grid Entity (in Grid is named as ID, depending on the type of Element
+	 * Returns a label for this Grid Entity (in Grid is named as ID, depending on the type of Element
 	 * @return label of this element
 	 */
 	public String getLabel() {
@@ -37,7 +42,7 @@ public abstract class GridElement {
 	}
 	
 	/**
-	 * sets a label for this element
+	 * Sets a label for this element
 	 * @param label to be set
 	 */
 	public void setLabel(String label) {
@@ -45,8 +50,8 @@ public abstract class GridElement {
 	}
 	
 	/**
-	 * returns the element ID (primary key on DB)
-	 * @return
+	 * Returns the element ID (primary key on DB)
+	 * @return Grid element ID
 	 */
 	@Id
 	@Column(name="id")
@@ -62,13 +67,26 @@ public abstract class GridElement {
 	public void setIdElement(int idElement) {
 		this.idElement = idElement;
 	}
+	
+	/**
+	 * Gets the version of this object
+	 * @return int version
+	 */
 	public int getVersion() {
 		return version;
 	}
+	
+	/**
+	 * Sets a version for this object
+	 * @param version new version of this object
+	 */
 	public void setVersion(int version) {
 		this.version = version;
 	}
 	
+	/**
+	 * Clones this object and creates a copy of references (doesn't copy the referenced objects!)
+	 */
 	public abstract GridElement clone();
 	
 }

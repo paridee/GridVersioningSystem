@@ -19,7 +19,7 @@ import grid.interfaces.Updatable;
 public class Question extends GridElement implements Updatable{
 
 	private List<Metric> 	metricList	=	new ArrayList();
-	private String 				question;
+	private String 			question;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "QuestionToMetric", joinColumns = { 

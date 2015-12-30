@@ -6,7 +6,10 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import grid.DAOImpl.GridDAOImpl;
 import grid.entities.Goal;
 import grid.entities.Grid;
 import grid.entities.MeasurementGoal;
@@ -15,49 +18,63 @@ import grid.entities.Project;
 import grid.entities.Question;
 import grid.entities.Strategy;
 
+/**
+ * This class provides a method for parsing a Grid from JSON Representation 
+ * @author Paride Casulli
+ * @author Lorenzo La Banca
+ *
+ */
 public class JSONFactory {
+	
+	private static final Logger logger	=	LoggerFactory.getLogger(GridDAOImpl.class);
+	
+	/**
+	 * This method takes a JSON string as parameter and parses and loads the contents in a Grid entity
+	 * @param json grid to be parsed
+	 * @return parsed Grid object
+	 */
 	public static Grid loadFromJson(String json){
-		Grid returnGrid	=	new Grid();
+		Grid returnGrid					=	new Grid();	//new Grid to be loaded
 		HashMap<String, Object> objects	=	new HashMap<String, Object>();
-		JSONObject obj		=	new JSONObject(json);
-		JSONArray metricList=	(JSONArray)obj.get("metricList");
-		ArrayList<Metric> metrics	=	new ArrayList<Metric>();
-		for(int i=0;i<metricList.length();i++){
+		JSONObject obj					=	new JSONObject(json);
+		JSONArray metricList			=	(JSONArray)obj.get("metricList");
+		ArrayList<Metric> metrics		=	new ArrayList<Metric>();
+		for(int i=0;i<metricList.length();i++){			//loads the Grid metrics, makes it Before other objects optimizing reading
 			Metric aMetric	=	JSONFactory.loadMetricFromJson(metricList.get(i).toString(), objects);
 			metrics.add(aMetric);
-			System.out.println("Metrica caricata "+aMetric.getLabel());
+			logger.info("Metric loaded "+aMetric.getLabel());
 		}
-		System.out.println("Numero Metriche Caricate "+metrics.size());
-		ArrayList<MeasurementGoal> measGoals	=	new ArrayList<MeasurementGoal>();
+		logger.info("Number of loaded metrics "+metrics.size());
+		ArrayList<MeasurementGoal> measGoals	=	new ArrayList<MeasurementGoal>();	//loads measurement goals
 		JSONArray measGoalList					=	(JSONArray)obj.get("measGoalList");
 		for(int i=0;i<measGoalList.length();i++){
-			MeasurementGoal aMG	=	JSONFactory.loadMeasurementGoalFromJson(measGoalList.get(i).toString(), objects);
+			MeasurementGoal aMG					=	JSONFactory.loadMeasurementGoalFromJson(measGoalList.get(i).toString(), objects);
 			measGoals.add(aMG);
 		}
-		System.out.println("Numero Measurement Goal Caricati "+measGoals.size());
-		JSONArray goalList	=	(JSONArray)obj.get("goalList");
-		//JSONArray goalList	=	new JSONArray(obj.getString("goalList"));
-		ArrayList<Goal> goals	=	new ArrayList<Goal>();
+		logger.info("Number of Measurement Goal loaded "+measGoals.size());
+		JSONArray goalList						=	(JSONArray)obj.get("goalList");
+		ArrayList<Goal> goals					=	new ArrayList<Goal>();
 		for(int i=0;i<goalList.length();i++){
 			goals.add(JSONFactory.loadGoalFromJson(goalList.get(i).toString(),objects));
 		}
-		System.out.println("MainClass.java goals loaded "+goals.size());
-		JSONObject projectj	=	(JSONObject) obj.get("project");
-		Project project			=	JSONFactory.loadProjectFromJson(projectj.toString(), objects);
-		JSONArray qList			=	(JSONArray) obj.get("questionList");
-		ArrayList<Question> questionList	=	new ArrayList<Question>();
+		logger.info("MainClass.java goals loaded "+goals.size());
+		JSONObject projectj						=	(JSONObject) obj.get("project");	//loads project
+		Project project							=	JSONFactory.loadProjectFromJson(projectj.toString(), objects);
+		JSONArray qList							=	(JSONArray) obj.get("questionList");//loads questions
+		ArrayList<Question> questionList		=	new ArrayList<Question>();
 		for(int i=0;i<qList.length();i++){
-			Question aQ	=	JSONFactory.loadQuestionFromJson(qList.get(i).toString(),objects);
+			Question aQ							=	JSONFactory.loadQuestionFromJson(qList.get(i).toString(),objects);
 			questionList.add(aQ);
 		}
-		System.out.println("MainClass.java questions loaded "+questionList.size());
-		JSONArray strategies	=	(JSONArray) obj.get("strategyList");
-		ArrayList<Strategy> strategyList	=	new ArrayList<Strategy>();
+		logger.info("MainClass.java questions loaded "+questionList.size());
+		JSONArray strategies					=	(JSONArray) obj.get("strategyList");//loads strategies
+		ArrayList<Strategy> strategyList		=	new ArrayList<Strategy>();
 		for(int i=0;i<strategies.length();i++){
-			Strategy aStr	=	JSONFactory.loadStrategyFromJson(strategies.get(i).toString(), objects);
+			Strategy aStr						=	JSONFactory.loadStrategyFromJson(strategies.get(i).toString(), objects);
 			strategyList.add(aStr);
 		}
-		System.out.println("MainClass.java strategy loaded "+strategyList.size());
+		logger.info("MainClass.java strategy loaded "+strategyList.size());
+		//sets loaded objects to grid
 		returnGrid.setMainGoals(goals);
 		returnGrid.setProject(project);
 		return returnGrid;

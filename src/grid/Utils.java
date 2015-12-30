@@ -2,6 +2,11 @@ package grid;
 
 import java.util.ArrayList;
 
+/**
+ * Utilities class with singletons methods
+ * @author Paride Casulli
+ * @author Lorenzo La Banca
+ */
 public class Utils {
 	/**
 	 * Given 2 arraylists adds the non-duplicate elements in the first one

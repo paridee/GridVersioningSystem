@@ -14,17 +14,30 @@ import grid.entities.Grid;
 import grid.entities.GridElement;
 import grid.interfaces.DAO.GridDAO;
 
-@Repository //TODO remove comment when using spring, this annotates a DAO for the framework
+/**
+ * DAO implementation for Grid Element in Hibernate
+ * @author Paride Casulli
+ * @author Lorenzo La Banca
+ *
+ */
+
+@Repository 
 public class GridDAOImpl implements GridDAO {
 
 	private static final Logger logger	=	LoggerFactory.getLogger(GridDAOImpl.class);
 	private SessionFactory		sessionFactory;
 	
-	
+	/**
+	 * Sets a session factory for this DAO
+	 * @param sessionFactory session factory instance
+	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addGrid(Grid g) {
 		Session	session	=	this.sessionFactory.getCurrentSession();
@@ -32,6 +45,9 @@ public class GridDAOImpl implements GridDAO {
 		logger.info("GoalDAOImpl: added a new Goal on persistence layer");		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateGrid(Grid g) {
 		Session	session	=	this.sessionFactory.getCurrentSession();
@@ -39,32 +55,43 @@ public class GridDAOImpl implements GridDAO {
 		logger.info("updated a "+g.getClass()+" on persistence layer");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Grid> listAllGrids() {
 		Session session				=	this.sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Grid> gridElList	=	session.createQuery("from Grid").list();
+		List<Grid> gridElList		=	session.createQuery("from Grid").list();
 		for(Grid g : gridElList){
 			logger.info("Grid::"+g);
 		}
 		return gridElList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Grid getGridById(int id) {
 		Session currentSession	=	this.sessionFactory.getCurrentSession();
-		Grid	g			=	(Grid) currentSession.load(Grid.class,new Integer(id));
+		Grid	g				=	(Grid) currentSession.load(Grid.class,new Integer(id));
 		logger.info(g.getClass().getName()+" loaded::"+g);
 		return g;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Grid getLatestGrid(int projid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Grid> getGridLog(int projid) {
 		Session session				=	this.sessionFactory.getCurrentSession();
@@ -76,6 +103,9 @@ public class GridDAOImpl implements GridDAO {
 		return gridElList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void removeGrid(int id) {
 		Session session	=	this.sessionFactory.getCurrentSession();
@@ -86,6 +116,9 @@ public class GridDAOImpl implements GridDAO {
 		logger.info(g.getClass().getName()+" deleted successfully");		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Grid upgradeGrid(Grid g) {
 		Grid upgraded	=	new Grid();
@@ -100,6 +133,5 @@ public class GridDAOImpl implements GridDAO {
 		this.addGrid(upgraded);
 		return upgraded;
 	}
-
 
 }

@@ -111,10 +111,16 @@ public class Goal extends GridElement implements Updatable{
 	 * @return list of strategies
 	 */
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "GoalToStrategyList", joinColumns = { 
-			@JoinColumn(name = "goalID", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "strID", 
-					nullable = false, updatable = false) })
+	@JoinTable(	name = "GoalToStrategyList", 
+				joinColumns 		= 	{ 
+						@JoinColumn(name 		=	"goalID", 
+									nullable 	= 	false, 
+									updatable 	= 	false)}, 
+				inverseJoinColumns 	= 	{ 
+						@JoinColumn(name 		= 	"strID", 
+									nullable 	= 	false, 
+									updatable 	= 	false)}
+			)
 	public List<Strategy> getStrategyList() {
 		return strategyList;
 	}
@@ -127,7 +133,9 @@ public class Goal extends GridElement implements Updatable{
 		this.strategyList = strategyList;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ArrayList<GridElement> update(GridElement ge) {
 		ArrayList<GridElement> returnList	=	new ArrayList<GridElement>();
@@ -154,6 +162,9 @@ public class Goal extends GridElement implements Updatable{
 		return returnList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public GridElement clone() {
 		// TODO Auto-generated method stub

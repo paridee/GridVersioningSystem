@@ -13,6 +13,11 @@ import grid.entities.Strategy;
 
 public class HibernateUtil {
     
+	/**
+	 * Utility singleton class, creates a factory for a Hibernate session, configures It with a list of annotated class
+	 * @author Paride Casulli
+	 * @author Lorenzo La Banca
+	 */
     private static SessionFactory sessionFactory;
      
     static{

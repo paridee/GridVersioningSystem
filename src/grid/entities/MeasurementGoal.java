@@ -22,12 +22,12 @@ import grid.interfaces.Updatable;
 @Entity
 @Table(name="MeasurementGoal")
 public class MeasurementGoal extends GridElement implements Updatable{
-	String description			=	"";
-	String interpretationModel	=	"";
-	List<Question> questionList	=	new ArrayList<Question>();
+	private	String description			=	"";
+	private	String interpretationModel	=	"";
+	private	List<Question> questionList	=	new ArrayList<Question>();
 	
 	/**
-	 * returns a description of the measurement goal
+	 * Returns a description of the measurement goal
 	 * @return description string
 	 */
 	public String getDescription() {
@@ -35,38 +35,61 @@ public class MeasurementGoal extends GridElement implements Updatable{
 	}
 
 	/**
-	 * sets a description for this measurement goal
+	 * Sets a description for this measurement goal
 	 * @param description string
 	 */
 	public void setDescription(String description) {
-		this.description = description;
+		this.description 	= 	description;
 	}
 
-
+	/**
+	 * Returns an Interpretation Model for this measurement Goal
+	 * @return interpretation model
+	 */
 	public String getInterpretationModel() {
 		return interpretationModel;
 	}
 
-
+	/**
+	 * Sets an interpretation model for this measurement goal
+	 * @param interpretationModel
+	 */
 	public void setInterpretationModel(String interpretationModel) {
 		this.interpretationModel = interpretationModel;
 	}
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "MeasurementGoalToQuestion", joinColumns = { 
-			@JoinColumn(name = "goalID", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "quesID", 
-					nullable = false, updatable = false) })
+	
+	/**
+	 * Gets a question list for this measurement goal
+	 * @return question list
+	 */
+	@ManyToMany(fetch 	= 	FetchType.LAZY, 
+				cascade = 	CascadeType.ALL)
+				@JoinTable(	name 	= 	"MeasurementGoalToQuestion", 
+							joinColumns 	= 	{ 
+									@JoinColumn(name 		= 	"goalID", 
+												nullable	= 	false, 
+												updatable 	= 	false) 
+									}, 
+							inverseJoinColumns 	= 	{ 
+									@JoinColumn(name 		= 	"quesID", 
+												nullable 	= 	false, 
+												updatable 	= 	false) 
+									})
 	public List<Question> getQuestionList() {
 		return questionList;
 	}
 
-
+	/**
+	 * Sets a question list for this measurement goal
+	 * @param questionList question list to be set for this measurement goal
+	 */
 	public void setQuestionList(List<Question> questionList) {
 		this.questionList = questionList;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ArrayList<GridElement> update(GridElement ge) {
 		MeasurementGoal updated	=	(MeasurementGoal) this.clone();
@@ -76,7 +99,7 @@ public class MeasurementGoal extends GridElement implements Updatable{
 		for(int i=0;i<this.questionList.size();i++){
 			if(this.questionList.get(i).getLabel().equals(ge.getLabel())){
 				updated.questionList.set(i, (Question) ge);
-				addThis=true;
+				addThis	=	true;
 			}
 		}
 		for(int i=0;i<this.questionList.size();i++){
@@ -87,7 +110,10 @@ public class MeasurementGoal extends GridElement implements Updatable{
 		}
 		return returnList;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public GridElement clone() {
 		MeasurementGoal mg	=	new MeasurementGoal();

@@ -42,7 +42,7 @@ public interface GridDAO {
 	/**
 	 * Gets the latest version of a Grid for a specified project
 	 * @param projid
-	 * @return
+	 * @return returns requested Grif
 	 */
 	public Grid getLatestGrid(int projid);
 	

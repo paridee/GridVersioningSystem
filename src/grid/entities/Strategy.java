@@ -19,9 +19,9 @@ import grid.interfaces.Updatable;
 public class Strategy extends GridElement implements Updatable{
 	
 	private String 			description;
-	private boolean			isTerminal	=	false;	//TODO manage boolean
+	private boolean			isTerminal	=	false;
 	private String			strategicProjectId;
-	private List<Goal>	goalList;
+	private List<Goal>		goalList;
 	
 	
 	public String getDescription() {
@@ -52,12 +52,18 @@ public class Strategy extends GridElement implements Updatable{
 		this.strategicProjectId = strategicProjectId;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "StrategyToGoalList", joinColumns = { 
-			@JoinColumn(name = "strID", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "goalID", 
-					nullable = false, updatable = false) })
-	
+	@ManyToMany(	cascade 	= 	CascadeType.ALL)
+	@JoinTable(		name 		= 	"StrategyToGoalList", 
+					joinColumns = 	{ 
+							@JoinColumn(name 		= 	"strID", 
+										nullable 	= 	false, 
+										updatable 	= 	false) 
+							}, 
+					inverseJoinColumns	= { 
+							@JoinColumn(name 		= 	"goalID", 
+										nullable 	= 	false, 
+										updatable 	= 	false) 
+							})
 	public List<Goal> getGoalList() {
 		return goalList;
 	}
@@ -67,7 +73,9 @@ public class Strategy extends GridElement implements Updatable{
 		this.goalList = goalList;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ArrayList<GridElement> update(GridElement ge) {
 		Strategy updated	=	(Strategy)this.clone();
@@ -89,7 +97,9 @@ public class Strategy extends GridElement implements Updatable{
 		return returnList;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public GridElement clone() {
 		Strategy cloned	=	new Strategy();
